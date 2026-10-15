@@ -1,0 +1,64 @@
+/* ==========================================================================
+   Application Layout, Responsive Breakpoints & Print Styles
+   ========================================================================== */
+
+/* Responsive Navbar */
+@media (max-width: 768px) {
+  .desktop-nav {
+    display: none !important;
+  }
+  .mobile-nav-toggle {
+    display: flex !important;
+  }
+}
+
+@media (min-width: 769px) {
+  .mobile-nav-toggle {
+    display: none !important;
+  }
+}
+
+/* Subtle pulse animation for live connection indicator */
+.pulse {
+  animation: pulseScale 2s infinite ease-in-out;
+}
+
+@keyframes pulseScale {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.4;
+    transform: scale(1.15);
+  }
+}
+
+/* Print Styles for Digital Ticket Pass */
+@media print {
+  header,
+  footer,
+  .toast-container,
+  .btn,
+  .modal-backdrop button {
+    display: none !important;
+  }
+
+  body {
+    background: #ffffff !important;
+    color: #000000 !important;
+  }
+
+  .modal-backdrop {
+    position: static !important;
+    background: transparent !important;
+    padding: 0 !important;
+  }
+
+  .modal-content {
+    box-shadow: none !important;
+    border: 2px solid #000 !important;
+    color: #000 !important;
+    max-width: 100% !important;
+  }
+}
