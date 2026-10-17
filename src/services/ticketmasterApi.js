@@ -667,7 +667,7 @@ export const getActiveApiKey = () => {
   if (customKey && customKey.trim().length > 0) {
     return customKey.trim();
   }
-  return import.meta.env.VITE_TICKETMASTER_API_KEY || '';
+  return import.meta.env?.VITE_TICKETMASTER_API_KEY || '';
 };
 
 export const saveCustomApiKey = (key) => {

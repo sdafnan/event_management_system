@@ -14,6 +14,7 @@ import {
   ShieldCheck,
   Sparkles
 } from 'lucide-react';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 const RegistrationModal = () => {
   const dispatch = useDispatch();
@@ -30,6 +31,8 @@ const RegistrationModal = () => {
   const [specialRequests, setSpecialRequests] = useState('');
   const [agreeTerms, setAgreeTerms] = useState(true);
   const [errorMsg, setErrorMsg] = useState('');
+  const closeModal = () => dispatch(closeRegisterModal());
+  const dialogRef = useModalAccessibility(isRegisterModalOpen && Boolean(registerModalEvent), closeModal);
 
   // Prefill user data when modal opens
   useEffect(() => {
@@ -116,9 +119,14 @@ const RegistrationModal = () => {
   };
 
   return (
-    <div className="modal-backdrop" onClick={() => dispatch(closeRegisterModal())}>
+    <div className="modal-backdrop" onClick={closeModal}>
       <div
         className="modal-content animate-scale-up"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="registration-modal-title"
+        tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         style={{ maxWidth: '620px', padding: '0' }}
       >
@@ -137,7 +145,9 @@ const RegistrationModal = () => {
             }}
           />
           <button
-            onClick={() => dispatch(closeRegisterModal())}
+            type="button"
+            aria-label="Close event registration dialog"
+            onClick={closeModal}
             style={{
               position: 'absolute',
               top: '12px',
@@ -157,6 +167,7 @@ const RegistrationModal = () => {
               {categoryName}
             </span>
             <h3
+              id="registration-modal-title"
               style={{
                 fontSize: '1.25rem',
                 fontWeight: 800,
@@ -259,6 +270,7 @@ const RegistrationModal = () => {
                     id="reg-name"
                     type="text"
                     className="form-input"
+                    data-dialog-initial-focus
                     value={attendeeName}
                     onChange={(e) => setAttendeeName(e.target.value)}
                     required

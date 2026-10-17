@@ -13,12 +13,15 @@ import {
   Sparkles,
   ArrowRight
 } from 'lucide-react';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 const DigitalPassModal = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const { activePassModal } = useSelector((state) => state.registrations);
+  const closeModal = () => dispatch(closePassModal());
+  const dialogRef = useModalAccessibility(Boolean(activePassModal), closeModal);
 
   if (!activePassModal) return null;
 
@@ -34,9 +37,14 @@ const DigitalPassModal = () => {
   };
 
   return (
-    <div className="modal-backdrop" onClick={() => dispatch(closePassModal())}>
+    <div className="modal-backdrop" onClick={closeModal}>
       <div
         className="modal-content animate-scale-up"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="digital-pass-modal-title"
+        tabIndex={-1}
         onClick={(e) => e.stopPropagation()}
         style={{
           maxWidth: '520px',
@@ -83,7 +91,7 @@ const DigitalPassModal = () => {
                 <Ticket size={18} color="#fff" />
               </div>
               <div>
-                <div style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '0.04em' }}>
+                <div id="digital-pass-modal-title" style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '0.04em' }}>
                   EVENT PASS
                 </div>
                 <div style={{ fontSize: '0.725rem', color: 'var(--text-muted)' }}>
@@ -93,7 +101,9 @@ const DigitalPassModal = () => {
             </div>
 
             <button
-              onClick={() => dispatch(closePassModal())}
+              type="button"
+              aria-label="Close digital pass dialog"
+              onClick={closeModal}
               style={{
                 background: 'rgba(255, 255, 255, 0.08)',
                 color: 'var(--text-main)',

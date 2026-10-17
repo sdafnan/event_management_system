@@ -3,12 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { closeApiKeyModal, addToast } from '../redux/slices/uiSlice';
 import { updateApiKey, fetchEvents } from '../redux/slices/eventsSlice';
 import { KeyRound, X, Check, ExternalLink, ShieldCheck, RefreshCw } from 'lucide-react';
+import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 const ApiKeyModal = () => {
   const dispatch = useDispatch();
   const { isApiKeyModalOpen } = useSelector((state) => state.ui);
   const { activeApiKey, isLiveApi } = useSelector((state) => state.events);
   const [inputKey, setInputKey] = useState(activeApiKey || '');
+  const closeModal = () => dispatch(closeApiKeyModal());
+  const dialogRef = useModalAccessibility(isApiKeyModalOpen, closeModal);
 
   if (!isApiKeyModalOpen) return null;
 
@@ -40,8 +43,17 @@ const ApiKeyModal = () => {
   };
 
   return (
-    <div className="modal-backdrop" onClick={() => dispatch(closeApiKeyModal())}>
-      <div className="modal-content" onClick={(e) => e.stopPropagation()} style={{ padding: '2rem' }}>
+    <div className="modal-backdrop" onClick={closeModal}>
+      <div
+        className="modal-content"
+        ref={dialogRef}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="api-key-modal-title"
+        tabIndex={-1}
+        onClick={(e) => e.stopPropagation()}
+        style={{ padding: '2rem' }}
+      >
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.65rem' }}>
             <div
@@ -59,14 +71,16 @@ const ApiKeyModal = () => {
               <KeyRound size={20} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.2rem', margin: 0 }}>Ticketmaster API Key</h3>
+              <h3 id="api-key-modal-title" style={{ fontSize: '1.2rem', margin: 0 }}>Ticketmaster API Key</h3>
               <p style={{ margin: 0, fontSize: '0.8rem', color: 'var(--text-muted)' }}>
                 Configure live Ticketmaster Discovery API v2
               </p>
             </div>
           </div>
           <button
-            onClick={() => dispatch(closeApiKeyModal())}
+            type="button"
+            aria-label="Close API key dialog"
+            onClick={closeModal}
             style={{
               background: 'transparent',
               color: 'var(--text-muted)',
@@ -112,6 +126,7 @@ const ApiKeyModal = () => {
             id="apiKeyInput"
             type="text"
             className="form-input"
+            data-dialog-initial-focus
             placeholder="Paste your Ticketmaster API Key..."
             value={inputKey}
             onChange={(e) => setInputKey(e.target.value)}

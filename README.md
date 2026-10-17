@@ -155,6 +155,12 @@ npm run build
 npm run preview
 ```
 
+### 6. Run Tests
+```bash
+npm test
+```
+The tests cover mock-event fallback behavior and event registration state, including duplicate prevention.
+
 ---
 
 ## 🔑 Demo Account Credentials
