@@ -2,7 +2,7 @@
 
 **Course:** Web Programming (Assignment 2)  
 **Instructor:** Mahhek Tahir  
-**Student:** Raja Omar  
+**Student:** Afnan Salahuddin  
 **Architecture:** React.js, Redux Toolkit, React Router, Ticketmaster Discovery API  
 
 ---
