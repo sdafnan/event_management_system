@@ -2,7 +2,7 @@
 
 **Course:** Web Programming (Assignment 2)  
 **Instructor:** Mahhek Tahir  
-**Student:** Raja Omar  
+**Student:** Afnan Salahuddin
 **Architecture:** React.js, Redux Toolkit, React Router, Ticketmaster Discovery API  
 
 ---
@@ -11,7 +11,7 @@
 
 **EventSphere** is an event management and live experience discovery platform developed with **React.js**, **Redux Toolkit**, and **React Router**, powered by the **Ticketmaster Discovery API v2**. 
 
-The system enables users to explore global events (concerts, sports tournaments, Broadway musicals, indie film festivals, conferences), view rich venue and pricing specifications, register for events with duplicate-prevention safeguards, and manage attendance via a dedicated dashboard complete with downloadable/printable digital QR event passes.
+The system enables users to explore global events (concerts, sports tournaments, Broadway musicals, indie film festivals, conferences), view rich venue and pricing specifications, register for events with duplicate-prevention safeguards, and manage attendance via a dedicated dashboard with printable digital pass previews.
 
 ---
 
@@ -45,7 +45,7 @@ The system enables users to explore global events (concerts, sports tournaments,
 - **Protected Action**: Unauthenticated users clicking "Register" are routed to the Login page and returned automatically to the event after authenticating.
 - **Duplicate Prevention**: Redux state checks verify if the logged-in user is already registered for the event, prohibiting duplicate submissions.
 - **Custom Attendee Configuration**: Collects attendee name, delivery email, ticket quantity (1 to 10), ticket tier (`Standard Admission`, `VIP Experience & Fast Track`, `Early Bird Pass`), and special requests/notes.
-- **Instant Digital Pass**: Registration triggers a celebratory toast notification and generates a digital **Event Pass** modal featuring a unique confirmation code (`ES-XXXXXX`), attendee details, ticket tier, barcode, and scannable QR code graphic.
+- **Instant Digital Pass Preview**: Registration triggers a toast notification and generates a printable **Event Pass** preview with a unique confirmation code (`ES-XXXXXX`), attendee details, and decorative QR-code and barcode graphics. The graphics are for demonstration only and are not scannable tickets.
 - **Print & Save**: One-click "Print / Save PDF" feature formatted with dedicated CSS print stylesheets.
 
 ### 5. My Events Management Dashboard
@@ -115,13 +115,13 @@ web_a2/
 ## 🚀 Getting Started Locally
 
 ### Prerequisites
-- **Node.js**: v18.0 or later (tested on v22)
-- **npm**: v9.0 or later (tested on v10)
+- **Node.js**: v20.19 or later, or v22.12 or later (required by Vite 8)
+- **npm**: v10 or later recommended
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/yourusername/event-management-system.git
-cd event-management-system
+git clone https://github.com/sdafnan/event_management_system.git
+cd event_management_system
 ```
 
 ### 2. Install Dependencies
@@ -159,7 +159,7 @@ npm run preview
 ```bash
 npm test
 ```
-The tests cover mock-event fallback behavior and event registration state, including duplicate prevention.
+The tests cover mock-event fallback behavior, registration state, duplicate prevention, and stale event-request handling.
 
 ---
 
@@ -174,15 +174,11 @@ For quick testing without creating a new user, you can use the pre-seeded accoun
 
 ## 📜 Version Control History
 
-The project follows a structured, incremental commit history reflecting feature milestones:
-1. `Initial React project setup`
-2. `Add authentication pages and implement Redux authentication`
-3. `Add Ticketmaster API integration and event listing`
-4. `Add event details view and venue routing`
-5. `Add event registration with Redux state and digital ticket pass`
-6. `Add My Events dashboard with upcoming and completed tabs`
-7. `Add protected routes, user profile, and app navigation`
-8. `Polish responsive UI, animations, and documentation`
+The repository history records the project snapshot and subsequent improvements:
+1. `4aa3384` — `Add event management project and Ticketmaster discovery`
+2. `9142baf` — `Add modal accessibility and behavior tests`
+3. `ae7bffc` — `Ignore stale event search responses`
+4. `2004595` — `Report event registration failures accurately`
 
 ---
 

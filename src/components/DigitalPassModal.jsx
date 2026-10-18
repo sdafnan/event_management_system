@@ -235,7 +235,7 @@ const DigitalPassModal = () => {
                   Scan at Entrance
                 </div>
                 <div style={{ fontSize: '0.68rem', color: '#64748b', marginTop: '2px' }}>
-                  Present this digital QR pass on arrival for expedited verification.
+                  This pass is a visual preview only; its code graphics are not scannable for entry.
                 </div>
                 {/* Simulated Barcode lines */}
                 <div style={{ display: 'flex', gap: '3px', marginTop: '8px', height: '28px', alignItems: 'stretch' }}>

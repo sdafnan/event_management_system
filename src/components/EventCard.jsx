@@ -3,6 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { openRegisterModal } from '../redux/slices/uiSlice';
 import { Calendar, MapPin, Tag, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import { formatCurrency } from '../utils/formatCurrency';
 
 const EventCard = ({ event }) => {
   const navigate = useNavigate();
@@ -193,7 +194,7 @@ const EventCard = ({ event }) => {
               Tickets from
             </div>
             <div style={{ fontSize: '0.975rem', fontWeight: 800, color: 'var(--text-main)' }}>
-              {priceMin ? `${currency} $${priceMin}` : 'See Details'}
+              {priceMin != null ? formatCurrency(priceMin, currency) : 'See Details'}
             </div>
           </div>
 

@@ -24,6 +24,7 @@ import {
   ShieldCheck,
   Compass
 } from 'lucide-react';
+import { formatCurrency } from '../utils/formatCurrency';
 
 const EventDetails = () => {
   const { id } = useParams();
@@ -258,7 +259,9 @@ const EventDetails = () => {
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline' }}>
                 <span style={{ fontSize: '0.8rem', color: 'var(--text-dim)', textTransform: 'uppercase' }}>Admission</span>
                 <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#fff' }}>
-                  {priceMin ? `${currency} $${priceMin} - $${priceMax}` : 'Free / Available'}
+                  {priceMin != null
+                    ? `${formatCurrency(priceMin, currency)}${priceMax != null ? ` - ${formatCurrency(priceMax, currency)}` : ''}`
+                    : 'Free / Available'}
                 </span>
               </div>
 
