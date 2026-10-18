@@ -42,6 +42,7 @@ export const fetchEventById = createAsyncThunk(
 
 const initialState = {
   items: [],
+  currentRequestId: null,
   selectedEvent: null,
   loading: false,
   detailsLoading: false,
@@ -107,12 +108,16 @@ export const eventsSlice = createSlice({
   extraReducers: (builder) => {
     builder
       // fetchEvents
-      .addCase(fetchEvents.pending, (state) => {
+      .addCase(fetchEvents.pending, (state, action) => {
         state.loading = true;
         state.error = null;
+        state.currentRequestId = action.meta.requestId;
       })
       .addCase(fetchEvents.fulfilled, (state, action) => {
+        if (state.currentRequestId !== action.meta.requestId) return;
+
         state.loading = false;
+        state.currentRequestId = null;
         state.items = action.payload.events || [];
         state.isLiveApi = action.payload.isLiveApi;
         if (action.payload.page) {
@@ -121,7 +126,10 @@ export const eventsSlice = createSlice({
         }
       })
       .addCase(fetchEvents.rejected, (state, action) => {
+        if (state.currentRequestId !== action.meta.requestId) return;
+
         state.loading = false;
+        state.currentRequestId = null;
         state.error = action.payload || 'Could not load events';
       })
       // fetchEventById
