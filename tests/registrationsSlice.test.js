@@ -37,10 +37,17 @@ test('creates and persists a registration with a digital pass', () => {
     setItem: (key, value) => persisted.set(key, String(value))
   };
 
-  const result = registrationsReducer(undefined, registerForEvent(registration));
+  const initialState = {
+    items: [],
+    currentUserId: registration.userId,
+    activePassModal: null,
+    error: 'A previous registration was rejected.'
+  };
+  const result = registrationsReducer(initialState, registerForEvent(registration));
   const [createdRegistration] = result.items;
 
   assert.equal(result.items.length, 1);
+  assert.equal(result.error, null);
   assert.match(createdRegistration.confirmationCode, /^ES-\d{6}$/);
   assert.equal(createdRegistration.eventId, registration.eventId);
   assert.equal(result.activePassModal, createdRegistration);

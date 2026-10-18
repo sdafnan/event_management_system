@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, useStore } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { closeRegisterModal, addToast } from '../redux/slices/uiSlice';
-import { registerForEvent, setActivePassModal } from '../redux/slices/registrationsSlice';
+import { registerForEvent } from '../redux/slices/registrationsSlice';
 import {
   Ticket,
   X,
@@ -18,11 +18,12 @@ import { useModalAccessibility } from '../hooks/useModalAccessibility';
 
 const RegistrationModal = () => {
   const dispatch = useDispatch();
+  const store = useStore();
   const navigate = useNavigate();
 
   const { isRegisterModalOpen, registerModalEvent } = useSelector((state) => state.ui);
   const { currentUser, isAuthenticated } = useSelector((state) => state.auth);
-  const { items: userRegistrations, error: regError } = useSelector((state) => state.registrations);
+  const userRegistrations = useSelector((state) => state.registrations.items);
 
   const [attendeeName, setAttendeeName] = useState('');
   const [attendeeEmail, setAttendeeEmail] = useState('');
@@ -108,6 +109,13 @@ const RegistrationModal = () => {
         specialRequests
       })
     );
+
+    const registrationError = store.getState().registrations.error;
+    if (registrationError) {
+      setErrorMsg(registrationError);
+      dispatch(addToast({ type: 'error', message: registrationError }));
+      return;
+    }
 
     dispatch(closeRegisterModal());
     dispatch(
